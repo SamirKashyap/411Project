@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+body text { 
+    fill: black; 
+    font: 12px sans-serif; 
+    text-anchor: end; 
+}
+
+.nation {
+    stroke: white;
+    fill: none;
+    stroke-width: 1;
+}
+
+.states {
+    stroke: white;
+    fill: none;
+    stroke-width: 1;
+}
+
+g.counties path {
+    stroke: white;
+    stroke-width: 0.25;
+}
+
