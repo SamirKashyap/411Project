@@ -1,11 +1,8 @@
 const express = require('express');
 const app = express();
 const util = require('util');
-var http = require('http');
-var path = require('path');
 var router = express(router);
 
-var County = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 
 app.use( express.static( __dirname + '/stuff'));
@@ -15,11 +12,9 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'Admin123',
     database: 'csce411database'
 });
-
-const query = util.promisify(connection.query).bind(connection);
 
 SUM_COLS = ["TotalPopulation", "NumberOfMen", "NumberOfWomen", "NumberOfVotingAgePersons", "NumberofEmployedOverAge16"];
 PCT_COLS = ["PercentHispanic", "PercentWhite", "PercentBlack", "PercentNative", "PercentAsian", "PercentPacific",
@@ -31,7 +26,7 @@ PCT_COLS = ["PercentHispanic", "PercentWhite", "PercentBlack", "PercentNative", 
 OTHER_COLS = ["CountyId", "State", "CountyName"];
 
 
-app.get('/about', async (req, res) => {
+app.get('/data', async (req, res) => {
     await connection.query(`select * from County inner join Tract on Tract.CountyId = County.CountyId`, async function(err, result, fields){
         full_list = []
         if (err) throw err;
@@ -62,13 +57,12 @@ app.get('/about', async (req, res) => {
             full_list.push(new_obj[key])
         }
         res.json({"result": full_list})
-        // connection.end();
-        // console.log("Disconnected from database");
     }); 
 });
 
 connection.connect((err) => {
     if (err){
+        console.log(err)
         console.log("Error connecting to database");
         return;
     };

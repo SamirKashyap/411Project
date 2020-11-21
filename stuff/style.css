@@ -1,12 +1,13 @@
 body {
     display: flex;
     justify-content: center;
+    flex-direction: column-reverse;
 }
 
-body text { 
-    fill: black; 
-    font: 12px sans-serif; 
-    text-anchor: end; 
+body text {
+    fill: black;
+    font: 12px sans-serif;
+    text-anchor: end;
 }
 
 .nation {
@@ -26,3 +27,17 @@ g.counties path {
     stroke-width: 0.25;
 }
 
+#button-container {
+    display: flex;
+    height: 30px;
+}
+
+#button-container button {
+    height: 30px;
+    padding: 5px;
+}
+
+#button-container button.selected {
+    background-color: green;
+    color: white;
+}

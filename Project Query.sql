@@ -50,14 +50,14 @@ CREATE TABLE Tract (
     primary key (TractId)
 );
 
-LOAD DATA INFILE 'c:/ProgramData/MySQL/MySQL Server 8.0/Uploads/acs2017_county_data.csv' 
+LOAD DATA LOCAL INFILE '/Users/peytontanzillo/Desktop/Website Design/411Project/Dataset/acs2017_county_data.csv' 
 IGNORE INTO TABLE County
   FIELDS TERMINATED BY ',' ENCLOSED BY '\"'
   LINES TERMINATED BY '\n'
   IGNORE 1 ROWS
 (CountyId, State, CountyName, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy);
 
-LOAD DATA INFILE 'c:/ProgramData/MySQL/MySQL Server 8.0/Uploads/acs2017_census_tract_data.csv' 
+LOAD DATA LOCAL INFILE '/Users/peytontanzillo/Desktop/Website Design/411Project/Dataset/acs2017_census_tract_data.csv' 
 IGNORE INTO TABLE Tract
   FIELDS TERMINATED BY ',' ENCLOSED BY '\"'
   LINES TERMINATED BY '\n'
@@ -68,4 +68,4 @@ UPDATE Tract
 	INNER JOIN County ON (Tract.State = County.State and Tract.CountyId = County.CountyName)
     SET Tract.CountyId = County.CountyId;
 
-ALTER table Tract ADD CONSTRAINT foreign key (CountyId) references County (CountyId);
+ALTER table Tract ADD CONSTRAINT foreign key (CountyId) references County(CountyId);

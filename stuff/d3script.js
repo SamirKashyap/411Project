@@ -3,11 +3,17 @@
 // .then(data => startd3(data))
 
 
-function showpopulation(){
-    svg.selectAll(".bruh")
+function displayGraph(column, high, low = 0){
+    const selected = document.getElementsByClassName('selected')
+    console.log(selected)
+    if (selected[0]) {
+        selected[0].className = ''
+    }
+    document.getElementById(column).className = 'selected'
+    svg.selectAll(".county")
     .style("fill", function(d) {
         try {
-            return getFill(rateById[d.id - 0].TotalPopulation, "Population");
+            return getFill(rateById[d.id - 0][column], high, low);
         } catch(e) {
             return undefined
         }
@@ -16,20 +22,21 @@ function showpopulation(){
     .on("mouseout", function(){
         d3.select(this).style("fill", function(d) {
             try {
-                return getFill(rateById[d.id - 0].TotalPopulation, "Population");
+                return getFill(rateById[d.id - 0][column], high, low);
             } catch(e) {
                 return undefined
             }
         }
         );
         getText(undefined);})
-    // svg.selectAll("g").childNodes.style('fill', 'orange')
+    
 }
 
 let rateById = {}; 
 var width = 1500,
 height = 700;
 var svg = d3.select("body").append("svg")
+        .attr("class", "application")
         .attr("width", width)
         .attr("height", height);
 // Text for displaying information
@@ -75,19 +82,13 @@ function getText(data) {
 }
 
 
-function getFill(data, type) {
-    if (type === "Population"){
-        var color = d3.scaleLinear()
-        // .domain([0, 10000, 50000, 200000, 500000, 1000000, 10000000])
-        // .range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);
-        .domain([0, 2000000])
-        .range(["#CCC", "#00F"]);
-    }
-    else{
-        var color = d3.scaleLinear()
-        .domain([0,100])
-        .range(["#CCC", "#00F"]);
-    }
+function getFill(data, high, low) {
+    // var color = d3.scaleThreshold()
+    // .domain([0, 10000, 50000, 200000, 500000, 1000000, 10000000])
+    // .range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);
+    var color = d3.scaleLinear()
+    .domain([low, high])
+    .range(["#CCC", "#00F"]);
     return color(data);
 }
     
@@ -117,7 +118,7 @@ function startd3(){
         if (error) throw error;
 
         // Read data
-        d3.json("about", function (error, data) {
+        d3.json("data", function (error, data) {
             if (error) throw error;
             console.log(data.result)
             data = data.result;
@@ -133,28 +134,12 @@ function startd3(){
                 .attr("class", "counties")
                 .selectAll("path")
                 .data(topojson.feature(us, us.objects.counties).features) 
-                .enter().append("path").attr("class", "bruh")
+                .enter().append("path")
+                .attr("class", "county")
                 .attr("d", path)
-                .style("fill", function(d) {
-                    try {
-                        return getFill(rateById[d.id - 0].PercentHispanic);
-                    } catch(e) {
-                        return undefined
-                    }
-                    
-                }).on("mouseover", function(d, i){
+                .on("mouseover", function(d, i){
                     d3.select(this).style("fill", "orange");
                     getText(rateById[d.id - 0]);})
-                .on("mouseout", function(){
-                    d3.select(this).style("fill", function(d) {
-                        try {
-                            return getFill(rateById[d.id - 0].PercentHispanic);
-                        } catch(e) {
-                            return undefined
-                        }
-                    }
-                    );
-                    getText(undefined);});
 
                 // Define states
                 svg.append("path")
@@ -169,6 +154,8 @@ function startd3(){
                     .datum(topojson.mesh(us, us.objects.nation))
                     .attr("class", "nation")
                     .attr("d", path);
+
+                displayGraph("TotalPopulation", 1000000)
 
                 getText(undefined);
         });

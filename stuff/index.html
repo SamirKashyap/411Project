@@ -7,8 +7,19 @@
         <link href="style.css" rel="stylesheet">
     </head>
     <body>
-        <!-- Page elements and content go here. -->
         <script type="text/javascript" src="d3script.js"></script>
-        <button onclick = "showpopulation()">population </button>
+        <div id="button-container">
+            <button id='TotalPopulation' onclick="displayGraph('TotalPopulation', 1000000)">Population</button>
+            <button id='PercentHispanic' onclick="displayGraph('PercentHispanic', 100)">% Hispanic</button>
+            <button id='PercentWhite' onclick="displayGraph('PercentWhite', 100)">% White</button>
+            <button id='PercentBlack' onclick="displayGraph('PercentBlack', 100)">% Black</button>
+            <button id='PercentNative' onclick="displayGraph('PercentNative', 100)">% Native</button>
+            <button id='PercentAsian' onclick="displayGraph('PercentAsian', 25)">% Asian</button>
+            <button id='PercentPacific' onclick="displayGraph('PercentPacific', 15)">% Pacific</button>
+            <button id='IncomePerCapita' onclick="displayGraph('IncomePerCapita', 70000, 15000)">Income Per Capita</button>
+            <button id='PercentPoverty' onclick="displayGraph('PercentPoverty', 100)">% Poverty</button>
+            <button id='PercentChildPoverty' onclick="displayGraph('PercentChildPoverty', 100)">% Child Poverty</button>
+            <button id='PercentUnemployed' onclick="displayGraph('PercentUnemployed', 100)">% Unemployed</button>
+        </div>
     </body>
 </html>
