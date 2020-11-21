@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const util = require('util');
 var router = express(router);
 
 
@@ -11,9 +10,10 @@ const mysql = require('mysql');
 
 const connection = mysql.createConnection({
     host: 'localhost',
+    // replace with your mysql credentials
     user: 'root',
     password: 'Admin123',
-    database: 'csce411database'
+    database: 'hallett_kashyap_tanzillo_database'
 });
 
 SUM_COLS = ["TotalPopulation", "NumberOfMen", "NumberOfWomen", "NumberOfVotingAgePersons", "NumberofEmployedOverAge16"];
